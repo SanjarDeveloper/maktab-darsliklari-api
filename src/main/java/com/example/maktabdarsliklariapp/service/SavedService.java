@@ -27,7 +27,7 @@ public class SavedService {
 
     public ApiResponse getAllSaved() {
         Optional<User> byUsername = usersRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (byUsername.isEmpty()){
+        if (!byUsername.isPresent()){
             return new ApiResponse("No such user :(",false);
         }
         else {
@@ -56,7 +56,7 @@ public class SavedService {
             }
         }
         Optional<Book> byClass_noAndBook_languageAndName = savedRepository.findOneBook(lang_n,class_n,book_name);
-        if (byClass_noAndBook_languageAndName.isEmpty()){
+        if (!byClass_noAndBook_languageAndName.isPresent()){
             return new ApiResponse("No such saved book",false);
         }
         else return new ApiResponse("Here",true, byClass_noAndBook_languageAndName.get());
@@ -76,12 +76,12 @@ public class SavedService {
             }
         }
         Optional<Book> oneBook = bookRepository.findOneBook(lang_n, class_n, savedDTO.getName());
-        if (oneBook.isEmpty()){
+        if (!oneBook.isPresent()){
             return new ApiResponse("No such book :(",false);
         }
         else {
             Optional<User> byUsername = usersRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-            if(byUsername.isEmpty()){
+            if(!byUsername.isPresent()){
                 return new ApiResponse("No such user :(", false);
             }else {
                 User user = byUsername.get();
@@ -108,12 +108,12 @@ public class SavedService {
             }
         }
         Optional<Book> oneBook = bookRepository.findOneBook(lang_n, class_n, book_name);
-        if (oneBook.isEmpty()){
+        if (!oneBook.isPresent()){
             return new ApiResponse("No such book :(",false);
         }
         else {
             Optional<User> byUsername = usersRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-            if(byUsername.isEmpty()){
+            if(!byUsername.isPresent()){
                 return new ApiResponse("No such user :(", false);
             }else {
                 User user = byUsername.get();

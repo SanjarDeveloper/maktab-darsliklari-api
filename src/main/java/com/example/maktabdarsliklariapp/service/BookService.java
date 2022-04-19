@@ -67,7 +67,7 @@ public class BookService {
         }
 
         Optional<Book> byClass_noAndBook_languageAndName = bookRepository.findOneBook(lang_n, class_n, book_name);
-        if (byClass_noAndBook_languageAndName.isEmpty()) {
+        if (!byClass_noAndBook_languageAndName.isPresent()) {
             return new ApiResponse("No such book", false);
         } else return new ApiResponse("Here", true, byClass_noAndBook_languageAndName.get());
     }
@@ -98,7 +98,7 @@ public class BookService {
             }
         }
         Optional<Book> book = bookRepository.findOneBook(lang_n, class_n, book_name);
-        if (book.isEmpty()) {
+        if (!book.isPresent()) {
             return new ApiResponse("No such book :(", false);
         } else {
             Book bookEdit = book.get();
@@ -127,7 +127,7 @@ public class BookService {
             }
         }
         Optional<Book> book = bookRepository.findOneBook(lang_n, class_n, book_name);
-        if (book.isEmpty()) {
+        if (!book.isPresent()) {
             return new ApiResponse("No such book", false);
         } else {
             Book book1 = book.get();
@@ -178,7 +178,7 @@ public class BookService {
     public ResponseEntity download(String class_no, String lang, String book_name) throws IOException {
         String bookName = book_name + "_" + class_no + "_" + lang;
         Optional<Attachment> byId = attachmentRepository.findByBookName(bookName);
-        if (byId.isEmpty()) {
+        if (!byId.isPresent()) {
             return ResponseEntity.ok().body(new ApiResponse("No such file :(", false));
         } else {
             Attachment attachment = byId.get();
